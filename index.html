@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATC &amp; ATS Automation System – VANP Nagpur | Presented by Sanchit Padwekar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root,
+    [data-theme="radar-night"] {
+      --bg-canvas: #050b14;
+      --bg-surface: #0a1424;
+      --bg-card: rgba(14, 28, 48, 0.88);
+      --bg-card-hover: rgba(20, 39, 66, 0.96);
+      --bg-inset: rgba(5, 11, 20, 0.85);
+      --border-subtle: rgba(56, 189, 248, 0.22);
+      --border-strong: rgba(0, 229, 255, 0.58);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent-primary: #00e5ff;
+      --accent-secondary: #38bdf8;
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --grid-line: rgba(0, 229, 255, 0.055);
+      --shell-shadow: 0 28px 90px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --svg-box-bg: #0f1f36;
+      --svg-text: #f1f5f9;
+      --svg-subtext: #94a3b8;
+      --glow-accent: rgba(0, 229, 255, 0.16);
+    }
+
+    [data-theme="daylight-atc"] {
+      --bg-canvas: #eef3f9;
+      --bg-surface: #ffffff;
+      --bg-card: rgba(248, 250, 252, 0.96);
+      --bg-card-hover: #ffffff;
+      --bg-inset: #e8f0f8;
+      --border-subtle: rgba(2, 132, 199, 0.22);
+      --border-strong: rgba(2, 132, 199, 0.58);
+      --text-primary: #0f172a;
+      --text-secondary: #1e293b;
+      --text-muted: #475569;
+      --accent-primary: #0284c7;
+      --accent-secondary: #0d9488;
+      --accent-amber: #d97706;
+      --accent-emerald: #059669;
+      --accent-rose: #dc2626;
+      --grid-line: rgba(2, 132, 199, 0.07);
+      --shell-shadow: 0 24px 65px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      --svg-box-bg: #ffffff;
+      --svg-text: #0f172a;
+      --svg-subtext: #475569;
+      --glow-accent: rgba(2, 132, 199, 0.12);
+    }
+
+    [data-theme="amber-phosphor"] {
+      --bg-canvas: #0b0702;
+      --bg-surface: #150e04;
+      --bg-card: rgba(31, 21, 6, 0.92);
+      --bg-card-hover: rgba(45, 31, 9, 0.98);
+      --bg-inset: rgba(11, 7, 2, 0.9);
+      --border-subtle: rgba(245, 158, 11, 0.26);
+      --border-strong: rgba(251, 191, 36, 0.64);
+      --text-primary: #fef3c7;
+      --text-secondary: #fde68a;
+      --text-muted: #d97706;
+      --accent-primary: #fbbf24;
+      --accent-secondary: #f59e0b;
+      --accent-amber: #fbbf24;
+      --accent-emerald: #34d399;
+      --accent-rose: #fb7185;
+      --grid-line: rgba(251, 191, 36, 0.06);
+      --shell-shadow: 0 28px 90px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(251, 191, 36, 0.08);
+      --svg-box-bg: #1c1306;
+      --svg-text: #fef3c7;
+      --svg-subtext: #d97706;
+      --glow-accent: rgba(251, 191, 36, 0.16);
+    }
+
+
+    [data-theme="emerald-ops"] {
+      --bg-canvas: #04100d;
+      --bg-surface: #091d18;
+      --bg-card: rgba(12, 36, 30, 0.9);
+      --bg-card-hover: rgba(17, 50, 42, 0.97);
+      --bg-inset: rgba(4, 16, 13, 0.88);
+      --border-subtle: rgba(52, 211, 153, 0.24);
+      --border-strong: rgba(16, 185, 129, 0.62);
+      --text-primary: #ecfdf5;
+      --text-secondary: #a7f3d0;
+      --text-muted: #6ee7b7;
+      --accent-primary: #34d399;
+      --accent-secondary: #2dd4bf;
+      --accent-amber: #fbbf24;
+      --accent-emerald: #10b981;
+      --accent-rose: #fb7185;
+      --grid-line: rgba(52, 211, 153, 0.06);
+      --shell-shadow: 0 28px 90px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(167, 243, 208, 0.08);
+      --svg-box-bg: #0c2620;
+      --svg-text: #ecfdf5;
+      --svg-subtext: #6ee7b7;
+      --glow-accent: rgba(16, 185, 129, 0.16);
+    }
+
+    [data-theme="crimson-alert"] {
+      --bg-canvas: #120508;
+      --bg-surface: #1f090e;
+      --bg-card: rgba(43, 13, 20, 0.9);
+      --bg-card-hover: rgba(60, 18, 28, 0.97);
+      --bg-inset: rgba(18, 5, 8, 0.88);
+      --border-subtle: rgba(251, 113, 133, 0.25);
+      --border-strong: rgba(244, 63, 94, 0.64);
+      --text-primary: #fff1f2;
+      --text-secondary: #fecdd3;
+      --text-muted: #fda4af;
+      --accent-primary: #fb7185;
+      --accent-secondary: #f43f5e;
+      --accent-amber: #fbbf24;
+      --accent-emerald: #34d399;
+      --accent-rose: #f43f5e;
+      --grid-line: rgba(251, 113, 133, 0.06);
+      --shell-shadow: 0 28px 90px rgba(0, 0, 0, 0.84), inset 0 1px 0 rgba(254, 205, 211, 0.08);
+      --svg-box-bg: #290c13;
+      --svg-text: #fff1f2;
+      --svg-subtext: #fda4af;
+      --glow-accent: rgba(244, 63, 94, 0.16);
+    }
+
+
+    .theme-shell {
+      background-color: var(--bg-canvas);
+      background-image: radial-gradient(circle at 50% 0%, var(--glow-accent), transparent 65%);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .theme-surface {
+      background-color: var(--bg-surface);
+      border-color: var(--border-subtle);
+      box-shadow: var(--shell-shadow);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .theme-card {
+      background-color: var(--bg-card);
+      border-color: var(--border-subtle);
+      color: var(--text-primary);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: transform 0.22s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .theme-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--border-strong);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--border-subtle);
+      transform: translateY(-2px);
+    }
+    .theme-inset {
+      background-color: var(--bg-inset);
+      border-color: var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .theme-muted { color: var(--text-muted); }
+    .theme-secondary { color: var(--text-secondary); }
+    .theme-accent { color: var(--accent-primary); }
+    .theme-amber { color: var(--accent-amber); }
+    .theme-emerald { color: var(--accent-emerald); }
+    .theme-rose { color: var(--accent-rose); }
+
+    .aviation-grid {
+      background-image:
+        radial-gradient(circle at 85% 15%, var(--glow-accent), transparent 45%),
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    /* Image Placeholder Styling */
+    .img-placeholder-frame {
+      position: relative;
+      overflow: hidden;
+      border: 1.5px dashed var(--border-strong);
+      background:
+        radial-gradient(circle at 50% 50%, var(--glow-accent), transparent 70%),
+        linear-gradient(135deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+        linear-gradient(225deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+        var(--bg-inset);
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .img-placeholder-frame:hover {
+      border-style: solid;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 24px var(--glow-accent);
+    }
+    .img-placeholder-frame img.cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Crisp Inline SVG Icon Helpers */
+    .ico {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      vertical-align: -0.15em;
+      flex-shrink: 0;
+    }
+    .ico-box {
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* HUD Corner Reticles on Stage */
+    .hud-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-color: var(--border-strong);
+      pointer-events: none;
+      opacity: 0.75;
+    }
+    .hud-tl { top: 12px; left: 12px; border-top-width: 2px; border-left-width: 2px; border-top-left-radius: 6px; }
+    .hud-tr { top: 12px; right: 12px; border-top-width: 2px; border-right-width: 2px; border-top-right-radius: 6px; }
+    .hud-bl { bottom: 12px; left: 12px; border-bottom-width: 2px; border-left-width: 2px; border-bottom-left-radius: 6px; }
+    .hud-br { bottom: 12px; right: 12px; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: 6px; }
+
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -36; }
+    }
+    @keyframes slideReveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes staggerIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes radarSweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulseBlip {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(1.4); }
+    }
+    @keyframes scanBar {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(350%); }
+    }
+
+    .scan-line {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 28%;
+      background: linear-gradient(to bottom, transparent, var(--glow-accent), transparent);
+      animation: scanBar 3.6s linear infinite;
+      pointer-events: none;
+    }
+
+    .flow-dash {
+      stroke-dasharray: 8 6;
+      animation: dashFlow 1.2s linear infinite;
+    }
+    .slide-enter {
+      animation: slideReveal 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .stagger-item {
+      opacity: 0;
+      animation: staggerIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Title Radar Widget */
+    .title-radar {
+      position: relative;
+      width: min(292px, 68vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 9999px;
+      border: 2px solid var(--border-strong);
+      background:
+        radial-gradient(circle at center, rgba(0, 229, 255, 0.16) 0%, transparent 65%),
+        repeating-radial-gradient(circle at center, transparent 0 34px, var(--border-subtle) 35px 36px);
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(0, 229, 255, 0.18), inset 0 0 24px rgba(0, 229, 255, 0.12);
+    }
+    .title-radar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: conic-gradient(from 0deg, rgba(16, 185, 129, 0.5), rgba(0, 229, 255, 0.16) 22%, transparent 32%);
+      animation: radarSweep 3.4s linear infinite;
+    }
+    .title-radar::after {
+      content: "";
+      position: absolute;
+      inset: 50% 0 auto 0;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+    .radar-cross-v {
+      position: absolute;
+      inset: 0 auto 0 50%;
+      width: 1px;
+      background: var(--border-subtle);
+    }
+    .radar-blip {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 9999px;
+      background: var(--accent-amber);
+      box-shadow: 0 0 12px var(--accent-amber);
+      animation: pulseBlip 2.6s ease-in-out infinite;
+    }
+
+    [data-motion="calm"] .flow-dash,
+    [data-motion="calm"] .slide-enter,
+    [data-motion="calm"] .stagger-item,
+    [data-motion="calm"] .title-radar::before,
+    [data-motion="calm"] .radar-blip,
+    [data-motion="calm"] .scan-line {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .flow-dash, .slide-enter, .stagger-item, .title-radar::before, .radar-blip, .scan-line {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    .thin-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .thin-scroll::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.2);
+      border-radius: 9999px;
+    }
+    .thin-scroll::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.45);
+      border-radius: 9999px;
+    }
+
+    #deck-stage {
+      width: 100%;
+      max-width: 1300px;
+      min-height: 580px;
+      height: calc(100vh - 134px);
+      max-height: 770px;
+    }
+    @media (max-width: 768px) {
+      #deck-stage {
+        min-height: 520px;
+        height: calc(100vh - 168px);
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body class="theme-shell font-sans antialiased overflow-x-hidden" data-theme="radar-night" data-motion="full">
+
+  <!-- Top Telemetry Bar -->
+  <header class="w-full theme-surface border-b backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 h-14 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <button type="button" onclick="goToSlide(1)" class="w-8 h-8 rounded-lg theme-inset border flex items-center justify-center theme-accent shrink-0 cursor-pointer" title="Return to Title Slide">
+          <!-- <svg class="ico w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12L18.5 5.5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> -->
+           <img src="/images/logo1.jpg" alt="">
+        </button>
+        <div class="truncate">
+          <span class="font-mono text-xs sm:text-sm font-bold theme-accent tracking-wide">AAI CNS • VANP NAGPUR</span>
+          <span class="hidden md:inline text-xs theme-muted ml-2">INDRA AIRCON 2100 (Type-C) • Sanchit Padwekar</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span id="slide-counter" class="font-mono text-xs sm:text-sm font-semibold px-3 py-1 rounded-full theme-inset border theme-accent">
+          01 / 11
+        </span>
+        <span id="slide-badge" class="hidden lg:inline-block font-mono text-xs px-2.5 py-1 rounded-full theme-inset border theme-amber truncate max-w-[260px]">
+          01 • TITLE SCREEN
+        </span>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button id="toggle-index-btn" type="button" class="px-2.5 py-1.5 rounded-lg theme-inset border text-xs font-medium flex items-center gap-1.5 cursor-pointer" title="Open Slide Index Drawer (O / I)">
+          <svg class="ico w-3.5 h-3.5 theme-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="hidden sm:inline">Index</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Clickable Progress Bar -->
+    <div id="progress-track" class="w-full h-1.5 bg-black/25 cursor-pointer" title="Click anywhere on bar to scrub slides">
+      <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-500 via-cyan-400 to-emerald-400 transition-all duration-300" style="width: 9.09%;"></div>
+    </div>
+  </header>
+
+  <!-- Collapsible Slide Index Overlay Drawer -->
+  <div id="index-drawer" class="hidden fixed inset-0 z-40 bg-black/65 backdrop-blur-sm flex items-start justify-center pt-16 px-3 sm:px-6 pb-6 overflow-y-auto">
+    <div class="w-full max-w-[1220px] theme-surface border rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="flex items-center justify-between gap-3 border-b border-sky-500/20 pb-3">
+        <div>
+          <span class="font-mono text-xs theme-accent font-semibold">SLIDE DIRECTORY • 11 SLIDES</span>
+          <h2 class="text-xl sm:text-2xl font-bold">Presentation Index &amp; Quick Jump</h2>
+        </div>
+        <button id="close-index-btn" type="button" class="px-3 py-1.5 rounded-xl theme-card border text-xs font-mono font-semibold cursor-pointer inline-flex items-center gap-1.5">
+          <svg class="ico w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <span>Close (Esc)</span>
+        </button>
+      </div>
+      <div id="index-drawer-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5"></div>
+    </div>
+  </div>
+
+  <!-- Main Viewport -->
+  <main class="w-full px-2 sm:px-6 pt-3 pb-2 flex flex-col items-center justify-center relative">
+    <!-- Toast Notification -->
+    <div id="toast-banner" class="hidden fixed top-16 right-4 sm:right-8 z-50 theme-surface border rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium flex items-center gap-2">
+      <svg class="ico w-4 h-4 theme-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <span id="toast-text"></span>
+    </div>
+
+    <!-- Slide Stage -->
+    <section id="deck-stage" class="theme-surface aviation-grid border rounded-3xl p-4 sm:p-7 lg:p-8 overflow-y-auto thin-scroll relative">
+      <span class="hud-corner hud-tl"></span>
+      <span class="hud-corner hud-tr"></span>
+      <span class="hud-corner hud-bl"></span>
+      <span class="hud-corner hud-br"></span>
+      <div id="slide-mount" class="h-full w-full"></div>
+    </section>
+
+    <!-- Bottom Navigation Dock -->
+    <nav aria-label="Slide Navigation" class="w-full max-w-[1300px] mt-2.5 flex items-center justify-between gap-3 px-1">
+      <button id="prev-btn" type="button" class="px-4 py-2 rounded-xl theme-card border text-xs sm:text-sm font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+        <svg class="ico w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>Prev</span>
+      </button>
+
+      <div id="step-dots" class="hidden sm:flex items-center gap-1.5 flex-wrap justify-center max-w-[780px]"></div>
+
+      <button id="next-btn" type="button" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-md shadow-sky-900/30 disabled:opacity-40 disabled:cursor-not-allowed">
+        <span>Next</span>
+        <svg class="ico w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </button>
+    </nav>
+  </main>
+
+  <script>
+    // Self-contained Crisp SVG Symbol Library
+    const ICONS = {
+      radar: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12L18.5 5.5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>`,
+      satelliteDish: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a7.31 7.31 0 0 0 10 10Z"/><path d="m9 15 3-3"/><path d="M17 13a6 6 0 0 0-6-6"/><path d="M21 13A10 10 0 0 0 11 3"/><path d="M7 20h6"/></svg>`,
+      planeUp: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>`,
+      route: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>`,
+      shieldHalved: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 2v20" opacity="0.45"/><path d="M12 2l8 3v7c0 6-8 10-8 10V2z" fill="currentColor" fill-opacity="0.28"/></svg>`,
+      layerGroup: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2" fill="currentColor" fill-opacity="0.25"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>`,
+      crosshairs: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>`,
+      bolt: `<svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+      film: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2.5"/><line x1="7" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="17" y2="20"/><line x1="2" y1="9" x2="7" y2="9"/><line x1="2" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="22" y2="9"/><line x1="17" y1="15" x2="22" y2="15"/></svg>`,
+      userAstronaut: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M9 8h6"/><path d="M4 21v-1a7 7 0 0 1 7-7h2a7 7 0 0 1 7 7v1"/><rect x="9" y="16" width="6" height="3" rx="1"/></svg>`,
+      arrowRight: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>`,
+      microchip: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>`,
+      desktop: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+      hardDrive: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><circle cx="6" cy="16" r="1" fill="currentColor"/><circle cx="10" cy="16" r="1" fill="currentColor"/></svg>`,
+      triangleExclamation: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+      circleCheck: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
+      xmark: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>`,
+      check: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      towerObservation: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3H6l2 5h8l2-5Z"/><path d="M9 8v13"/><path d="M15 8v13"/><path d="M7 21h10"/><path d="M12 1v2"/></svg>`,
+      towerBroadcast: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/><path d="M12 14v7"/></svg>`,
+      database: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>`,
+      compactDisc: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M6 12a6 6 0 0 1 6-6"/></svg>`,
+      fileInvoiceDollar: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="M9.5 14.5c0-1.1 1.1-2 2.5-2s2.5.9 2.5 2-1.1 1.5-2.5 1.5-2.5.4-2.5 1.5 1.1 2 2.5 2 2.5-.9 2.5-2"/></svg>`,
+      fileLines: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`,
+      clock: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+      server: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="18" r="1" fill="currentColor"/></svg>`,
+      diagramProject: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M8 6h8"/><path d="M12 6v9"/></svg>`,
+      tableCellsLarge: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>`,
+      rotateLeft: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>`,
+      image: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+      calendar: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+      cpu: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>`
+    };
+
+    // Helper for generating stylized dummy SVG placeholder data URIs
+    function makeDummySvg(label, sublabel, accentHex = "#00e5ff") {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+        <defs>
+          <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="${accentHex}" stroke-opacity="0.14" stroke-width="1"/>
+          </pattern>
+          <radialGradient id="glow" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stop-color="${accentHex}" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#06121f" stop-opacity="0.95"/>
+          </radialGradient>
+        </defs>
+        <rect width="800" height="450" fill="#06121f"/>
+        <rect width="800" height="450" fill="url(#glow)"/>
+        <rect width="800" height="450" fill="url(#grid)"/>
+        <rect x="20" y="20" width="760" height="410" rx="14" fill="none" stroke="${accentHex}" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="10 6"/>
+        <circle cx="400" cy="185" r="44" fill="none" stroke="${accentHex}" stroke-width="2.5"/>
+        <circle cx="400" cy="185" r="18" fill="none" stroke="${accentHex}" stroke-width="2" stroke-dasharray="4 3"/>
+        <line x1="340" y1="185" x2="460" y2="185" stroke="${accentHex}" stroke-opacity="0.5" stroke-width="1.5"/>
+        <line x1="400" y1="125" x2="400" y2="245" stroke="${accentHex}" stroke-opacity="0.5" stroke-width="1.5"/>
+        <text x="400" y="275" font-family="monospace" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle">${label}</text>
+        <text x="400" y="305" font-family="monospace" font-size="14" fill="${accentHex}" text-anchor="middle">${sublabel}</text>
+      </svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    const SLIDES = [
+      // SLIDE 1: Title Screen (Simplified without footer strip)
+      {
+        id: 1,
+        chapter: "Overview & System Profile",
+        badge: "01 • TITLE SCREEN",
+        title: "ATS Automation System",
+        render: () => `
+          <div class="h-full flex flex-col justify-center gap-4 slide-enter">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto">
+              <div class="lg:col-span-7 space-y-5">
+                <div class="stagger-item inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full theme-inset border font-mono text-xs" style="animation-delay:40ms;">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span class="theme-accent font-bold">AAI CNS NAGPUR</span>
+                  <span class="theme-muted">•</span>
+                  <span class="theme-amber font-semibold">INDRA AIRCON 2100 (TYPE-C)</span>
+                </div>
+
+                <h1 class="stagger-item text-3xl sm:text-5xl lg:text-[54px] font-bold leading-[1.08] tracking-tight" style="animation-delay:100ms;">
+                  <span class="theme-accent">ATS Automation</span> System
+                </h1>
+
+                <p class="stagger-item text-sm sm:text-base theme-secondary leading-relaxed max-w-2xl" style="animation-delay:160ms;">
+                  Architecture, operational positions, surveillance integration, and safety nets at <strong>Dr. Babasaheb Ambedkar International Airport, Nagpur (VANP)</strong>.
+                </p>
+
+                <!-- Presenter Attribution Card -->
+                <div class="stagger-item theme-card border-l-4 border-l-emerald-400 border rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 max-w-xl" style="animation-delay:220ms;">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl theme-inset border ico-box flex items-center justify-center theme-emerald text-lg shrink-0">
+                      ${ICONS.userAstronaut}
+                    </div>
+                    <div>
+                      <div class="font-mono text-[11px] uppercase tracking-wider theme-muted">Presented By</div>
+                      <div class="text-lg sm:text-xl font-bold theme-primary">Sanchit Padwekar</div>
+                      <div class="font-mono text-xs theme-accent">JE-CNS • Airports Authority of India, Nagpur (VANP)</div>
+                      <div class="font-mono text-xs theme-accent">On job training from 02/11/2026 to 05/11/2026</div>
+                    </div>
+                  </div>
+                  
+                </div>
+
+                <div class="stagger-item flex flex-wrap gap-2 pt-1" style="animation-delay:280ms;">
+                  <span class="px-3 py-1 rounded-full theme-inset border font-mono text-xs theme-accent inline-flex items-center gap-1.5">${ICONS.satelliteDish}<span>PSR / MSSR Radar</span></span>
+                  <span class="px-3 py-1 rounded-full theme-inset border font-mono text-xs theme-emerald inline-flex items-center gap-1.5">${ICONS.planeUp}<span>1090ES ADS-B</span></span>
+                  <span class="px-3 py-1 rounded-full theme-inset border font-mono text-xs theme-amber inline-flex items-center gap-1.5">${ICONS.route}<span>AFTN / AMSS</span></span>
+                  <span class="px-3 py-1 rounded-full theme-inset border font-mono text-xs theme-rose inline-flex items-center gap-1.5">${ICONS.shieldHalved}<span>Safety Nets (SNET)</span></span>
+                </div>
+              </div>
+
+              <!-- Animated Radar Scope Graphic -->
+              <div class="stagger-item lg:col-span-5 flex flex-col items-center justify-center gap-3" style="animation-delay:200ms;">
+                <div class="title-radar flex items-center justify-center">
+                  <div class="radar-cross-v"></div>
+                  <span class="radar-blip" style="top:28%; left:34%;"></span>
+                  <span class="radar-blip" style="top:58%; left:66%; animation-delay:0.9s;"></span>
+                  <span class="radar-blip" style="top:72%; left:42%; animation-delay:1.7s;"></span>
+                  <div class="relative z-10 px-2.5 py-1 rounded-md theme-inset border font-mono text-[11px] theme-accent font-bold">
+                    VANP • 21.09°N 79.05°E
+                  </div>
+                </div>
+                <div class="font-mono text-xs theme-muted text-center">
+                  INDRA SISTEMAS (Spain) • AIRCON 2100 Type-C
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // SLIDE 2 (Old Slide 3): What is an ATC Automation System? + System Info
+      {
+        id: 2,
+        chapter: "Overview & System Profile",
+        badge: "02 • SYSTEM CONCEPT & INFO",
+        title: "What is an ATC Automation System?",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3.5 slide-enter">
+            <!-- Header -->
+            <div>
+              <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">What Is It &amp; Station Profile</span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">The “Brain” Behind the Controller’s Screen</h2>
+            </div>
+
+            <!-- Top Split: Left = Core Definition | Right = Station Specifications (2x2) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
+              <!-- Core Concept Card -->
+              <div class="stagger-item lg:col-span-6 theme-card border-l-4 border-l-sky-400 border rounded-2xl p-4 sm:p-5 flex flex-col justify-between gap-2.5" style="animation-delay:40ms;">
+                <div class="font-mono text-xs theme-accent font-bold uppercase tracking-wider">Core Purpose</div>
+                <p class="text-sm sm:text-base theme-primary leading-relaxed">
+                  An ATC Automation System collects <strong class="theme-accent">surveillance data</strong> (PSR/SSR radar, ADS-B), merges it with <strong class="theme-emerald">flight plans</strong> (AFTN/AMSS), and presents a single, clean, labelled air picture to each controller.
+                </p>
+                <div class="flex flex-wrap items-center gap-1.5 font-mono text-[11px] pt-1">
+                  <span class="px-2.5 py-0.5 rounded-full theme-inset border theme-accent">Surveillance</span>
+                  <span class="theme-muted font-bold">+</span>
+                  <span class="px-2.5 py-0.5 rounded-full theme-inset border theme-emerald">Flight Plans</span>
+                  <span class="theme-muted font-bold">=</span>
+                  <span class="px-2.5 py-0.5 rounded-full theme-inset border theme-amber">Unified Air Picture</span>
+                </div>
+              </div>
+
+              <!-- 2x2 Station Profile Grid -->
+              <!-- Station Profile Grid (6 Specs) -->
+              <div class="stagger-item lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-2" style="animation-delay:80ms;">
+                <div class="theme-card border border-l-4 border-l-sky-400 rounded-xl px-3.5 py-2.5 flex flex-col justify-center">
+                  <div class="font-mono text-[10px] uppercase tracking-wider theme-muted flex items-center gap-1.5">${ICONS.cpu}<span>Automation System</span></div>
+                  <div class="text-sm sm:text-base font-bold theme-accent mt-0.5 leading-snug">Type C</div>
+                </div>
+                <div class="theme-card border border-l-4 border-l-emerald-400 rounded-xl px-3.5 py-2.5 flex flex-col justify-center">
+                  <div class="font-mono text-[10px] uppercase tracking-wider theme-muted flex items-center gap-1.5">${ICONS.server}<span>Make / OEM</span></div>
+                  <div class="text-sm sm:text-base font-bold theme-emerald mt-0.5 leading-snug">Indra Sistemas, Spain</div>
+                </div>
+                <div class="theme-card border border-l-4 border-l-amber-400 rounded-xl px-3.5 py-2.5 flex flex-col justify-center">
+                  <div class="font-mono text-[10px] uppercase tracking-wider theme-muted flex items-center gap-1.5">${ICONS.microchip}<span>Model</span></div>
+                  <div class="text-sm sm:text-base font-bold theme-amber mt-0.5 leading-snug">AIRCON 2100</div>
+                </div>
+                <div class="theme-card border border-l-4 border-l-rose-400 rounded-xl px-3.5 py-2.5 flex flex-col justify-center">
+                  <div class="font-mono text-[10px] uppercase tracking-wider theme-muted flex items-center gap-1.5">${ICONS.calendar}<span>Date of Commissioning</span></div>
+                  <div class="text-sm sm:text-base font-bold theme-rose mt-0.5 leading-snug">20-01-2012</div>
+                </div>
+                <div class="theme-card border border-l-4 border-l-sky-400 rounded-xl px-3.5 py-2.5 flex flex-col justify-center">
+                  <div class="font-mono text-[10px] uppercase tracking-wider theme-muted flex items-center gap-1.5">${ICONS.desktop}<span>Operating System</span></div>
+                  <div class="text-xs sm:text-sm font-bold theme-accent mt-0.5 leading-snug">Red Hat Enterprise Linux Client 5.1</div>
+                </div>
+                <div class="theme-card border border-l-4 border-l-emerald-400 rounded-xl px-3.5 py-2.5 flex flex-col justify-center">
+                  <div class="font-mono text-[10px] uppercase tracking-wider theme-muted flex items-center gap-1.5">${ICONS.database}<span>Database Used</span></div>
+                  <div class="text-sm sm:text-base font-bold theme-emerald mt-0.5 leading-snug">PostgreSQL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Section: Clear 4-Stage Workflow -->
+            <div class="space-y-2 my-auto">
+              <div class="flex items-center justify-between px-1">
+                <span class="font-mono text-xs font-bold theme-muted uppercase tracking-wider">How It Works • 4-Stage Operational Flow</span>
+                <span class="hidden sm:inline font-mono text-xs theme-accent">COLLECT ➜ PROCESS ➜ DISPLAY ➜ RECORD</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                ${[
+                  { step: "STEP 01", tag: "COLLECT", icon: ICONS.satelliteDish, color: "theme-accent", title: "Sensor & Plan Ingestion", bullets: ["PSR/SSR radar & 1090ES ADS-B", "AFTN / AMSS flight plans"] },
+                  { step: "STEP 02", tag: "PROCESS", icon: ICONS.microchip, color: "theme-emerald", title: "Track & Correlate", bullets: ["Multi-sensor fusion & 4D path", "Real-time conflict checks"] },
+                  { step: "STEP 03", tag: "DISPLAY", icon: ICONS.desktop, color: "theme-amber", title: "Controller Screen", bullets: ["Callsign, FL & groundspeed", "Visual & audio safety alerts"] },
+                  { step: "STEP 04", tag: "RECORD", icon: ICONS.hardDrive, color: "theme-rose", title: "Sync Archiving", bullets: ["DRF radar/screen recording", "Neptuno voice replay & audit"] }
+                ].map((st, idx) => `
+                  <div class="stagger-item theme-card border rounded-2xl p-3.5 flex flex-col justify-between gap-2.5" style="animation-delay:${120 + idx * 60}ms;">
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono text-xs font-bold ${st.color}">${st.step} • ${st.tag}</span>
+                      <div class="w-8 h-8 rounded-lg theme-inset border ico-box flex items-center justify-center ${st.color} text-base">${st.icon}</div>
+                    </div>
+                    <h3 class="text-sm sm:text-base font-bold">${st.title}</h3>
+                    <ul class="space-y-1 text-xs theme-secondary">
+                      ${st.bullets.map(b => `<li class="flex items-start gap-1.5"><span class="${st.color} font-bold">•</span><span>${b}</span></li>`).join("")}
+                    </ul>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // SLIDE 3 (Old Slide 4): Before vs. After + Short "What is it?" summary from old Slide 3
+      {
+        id: 3,
+        chapter: "Overview & System Profile",
+        badge: "03 • OPERATIONAL SHIFT",
+        title: "Before vs. After ATC Automation",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3 slide-enter">
+  <div>
+    <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">Why We Use It</span>
+    <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">Manual Control vs. Automated ATC Operations</h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-auto">
+    <!-- Without Automation (Before) -->
+    <div class="stagger-item theme-card border-l-4 border-l-amber-500 border rounded-2xl p-4 sm:p-5 flex flex-col justify-between gap-3" style="animation-delay:80ms;">
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs font-bold theme-amber uppercase">Legacy Manual Environment</span>
+          <span class="theme-amber text-base">${ICONS.triangleExclamation}</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold theme-amber">Without Automation</h3>
+
+        <!-- BEFORE IMAGE CONTAINER -->
+        <div class="relative w-full h-28 sm:h-36 rounded-xl overflow-hidden border border-amber-500/30 bg-black/20 group">
+          <img 
+            src="./images/no_auto.jpg" 
+            alt="Legacy Manual ATC Paper Strips and Raw Radar" 
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <span class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm font-mono text-[10px] font-bold text-amber-400 uppercase tracking-wider">
+            Before • Manual Strips
+          </span>
+        </div>
+
+        <ul class="space-y-1.5 text-xs sm:text-sm theme-secondary pt-1">
+          <li class="flex items-start gap-2.5"><span class="theme-rose mt-0.5 shrink-0">${ICONS.xmark}</span><span>Raw radar blips with no automatic aircraft identity or callsign</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-rose mt-0.5 shrink-0">${ICONS.xmark}</span><span>Paper flight progress strips written and updated by hand</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-rose mt-0.5 shrink-0">${ICONS.xmark}</span><span>Each radar/surveillance sensor viewed separately</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-rose mt-0.5 shrink-0">${ICONS.xmark}</span><span>Potential conflicts and terrain hazards spotted only by eye</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-rose mt-0.5 shrink-0">${ICONS.xmark}</span><span>No synchronized data + voice record for incident replay</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- With Automation (After) -->
+    <div class="stagger-item theme-card border-l-4 border-l-emerald-400 border rounded-2xl p-4 sm:p-5 flex flex-col justify-between gap-3" style="animation-delay:150ms;">
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs font-bold theme-emerald uppercase">Indra AirCon 2100 Environment</span>
+          <span class="theme-emerald text-base">${ICONS.circleCheck}</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold theme-emerald">With Automation</h3>
+
+        <!-- AFTER IMAGE CONTAINER -->
+        <div class="relative w-full h-28 sm:h-36 rounded-xl overflow-hidden border border-emerald-400/30 bg-black/20 group">
+          <img 
+            src="./images/auto.jpg" 
+            alt="Indra AirCon 2100 Automated ATC Display" 
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <span class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm font-mono text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+            After • AirCon 2100 CWP
+          </span>
+        </div>
+
+        <ul class="space-y-1.5 text-xs sm:text-sm theme-secondary pt-1">
+          <li class="flex items-start gap-2.5"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.check}</span><span>Tracks labelled with callsign, flight level, and groundspeed</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.check}</span><span>Flight plans created, correlated, and updated automatically</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.check}</span><span>Multiple radars &amp; ADS-B sensors fused into one coherent track</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.check}</span><span>Automated safety-net alerts for conflict, low altitude &amp; restricted areas</span></li>
+          <li class="flex items-start gap-2.5"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.check}</span><span>Continuous DRF &amp; Neptuno recording for synchronous replay</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="theme-inset border rounded-xl px-4 py-2 text-xs sm:text-sm theme-muted">
+    <strong class="theme-accent">Operational Driver:</strong> Air traffic keeps growing across Nagpur FIR; manual methods alone cannot sustain safe separation and sector efficiency.
+  </div>
+</div>
+        `
+      },
+
+      // SLIDE 4 (Old Slide 5): Key Benefits of Automation
+      {
+        id: 4,
+        chapter: "Overview & System Profile",
+        badge: "04 • KEY BENEFITS",
+        title: "Key Benefits of ATC Automation",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-4 slide-enter">
+            <div>
+              <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">How It Helps</span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">Five Pillars of Automation Value</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 my-auto">
+              ${[
+                { title: "Safety", icon: ICONS.shieldHalved, accent: "theme-accent", desc: "Automated Short-Term Conflict Alert (STCA), Minimum Safe Altitude Warning (MSAW), and Area Proximity Warning (APW)." },
+                { title: "Capacity", icon: ICONS.layerGroup, accent: "theme-emerald", desc: "Controllers safely manage higher traffic density with significantly reduced cognitive and manual workload." },
+                { title: "Accuracy", icon: ICONS.crosshairs, accent: "theme-amber", desc: "Multi-sensor radar & ADS-B tracking eliminates single-sensor blind spots, jitter, and false targets." },
+                { title: "Efficiency", icon: ICONS.bolt, accent: "theme-accent", desc: "Flight plans, sector handovers, METAR weather, and air navigation billing data processed automatically." },
+                { title: "Evidence", icon: ICONS.film, accent: "theme-rose", desc: "Synchronized DRF screen/data and Neptuno audio recording support incident investigation and ATCO training." }
+              ].map((b, idx) => `
+                <div class="stagger-item theme-card border rounded-2xl p-4 flex flex-col justify-between gap-3" style="animation-delay:${idx * 65}ms;">
+                  <div class="w-10 h-10 rounded-xl theme-inset border ico-box flex items-center justify-center ${b.accent} text-lg">
+                    ${b.icon}
+                  </div>
+                  <div class="text-2xl sm:text-3xl font-extrabold tracking-tight ${b.accent}">${b.title}</div>
+                  <p class="text-xs theme-secondary leading-relaxed">${b.desc}</p>
+                </div>
+              `).join("")}
+            </div>
+
+            <div class="theme-inset border rounded-xl px-4 py-2.5 font-mono text-xs theme-secondary flex flex-wrap justify-between gap-2">
+              <span>SAFETY • CAPACITY • ACCURACY • EFFICIENCY • EVIDENCE</span>
+              <span class="theme-accent">AAI CNS NAGPUR (VANP)</span>
+            </div>
+          </div>
+        `
+      },
+
+      // SLIDE 5 (Combined Old Slides 6 & 7): SDD, FDD (with Image Placeholders) & Safety Nets (with Live Radar Animation)
+      {
+        id: 5,
+        chapter: "Core Subsystems & Displays",
+        badge: "05 • SDD, FDD & SAFETY NETS",
+        title: "Importance: SDD, FDD & Live Safety Nets",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3.5 slide-enter" id="slide5-root">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">Why It Matters • Visual &amp; Live Explorer</span>
+                <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">SDD, FDD/FDP &amp; Safety Nets</h2>
+              </div>
+              <div class="flex gap-2" id="s5-tab-bar">
+                <button type="button" data-tab="0" class="s5-tab px-3.5 py-1.5 rounded-xl font-mono text-xs font-semibold bg-sky-600 text-white cursor-pointer">SDD Display</button>
+                <button type="button" data-tab="1" class="s5-tab px-3.5 py-1.5 rounded-xl font-mono text-xs theme-card border cursor-pointer">FDD / FDP</button>
+                <button type="button" data-tab="2" class="s5-tab px-3.5 py-1.5 rounded-xl font-mono text-xs theme-card border cursor-pointer">Safety Nets (Live Sim)</button>
+              </div>
+            </div>
+
+            <div id="s5-tab-panel" class="theme-card border rounded-2xl p-4 sm:p-5 my-auto flex-1 flex flex-col justify-center"></div>
+
+            
+          </div>
+        `
+      },
+
+      // SLIDE 6 (Old Slide 8): Single-Column Server List + Adjacent Info & Image Placeholder
+      {
+        id: 6,
+        chapter: "Core Subsystems & Displays",
+        badge: "06 • SERVER ARCHITECTURE",
+        title: "Core Server Room Subsystems & Functions",
+        render: () => {
+          const servers = [
+            {
+              key: "sdp",
+              name: "SDP-1 / SDP-2",
+              full: "Situation Data Processor & SNET",
+              role: "Plot/track processing, mono/multi-radar tracking & fusion, plus Safety Nets (SNET): STCA, MSAW, APW, CLAM, RAM & distress alerts.",
+              io: "In: RDCU-Rx ASTERIX plots/tracks + FDP flight correlation | Out: CWP/SDD system tracks, SNET alerts & DRF",
+              imgLabel: "SDP-1 / SDP-2 RACK IMAGE",
+              imgSub: "Replace src with SDP Server Rack Photo (16:9 Cover)"
+            },
+            {
+              key: "fdp",
+              name: "FDP-1 / FDP-2",
+              full: "Flight Data Processor",
+              role: "FPL / RPL / AFTN flight plan processing, 4D trajectory prediction, sector coordination & cold/warm start recovery.",
+              io: "In: AMSS/AFTN messages & CWP updates | Out: SDP correlation, FDD/strips & billing",
+              imgLabel: "FDP-1 / FDP-2 SERVER IMAGE",
+              imgSub: "Replace src with FDP Server Photo (16:9 Cover)"
+            },
+            {
+              key: "rdcu-rx",
+              name: "RDCU-Rx1 / Rx2",
+              full: "Radar Data Communication Unit (Receive)",
+              role: "Serial/LAN ingestion from radar & ADS-B sensors, format conversion to ASTERIX, and bypass/DRA data feed.",
+              io: "In: 8 Radar & ADS-B sites (eth4 / eth6 via switches/routers) | Out: SDP-1/2, DRF-1/2 & LAN-3 DRA",
+              imgLabel: "RDCU-Rx1 / Rx2 UNIT IMAGE",
+              imgSub: "Replace src with RDCU-Rx Hardware Photo (16:9 Cover)"
+            },
+            {
+              key: "rdcu-tx",
+              name: "RDCU-Tx",
+              full: "Radar Data Communication Unit (Transmit)",
+              role: "Sends processed SDD/track data to external ATS/surveillance stations and supports data replay workflows.",
+              io: "In: Processed track/system stream | Out: Adjacent/external ATS stations & replay pipeline",
+              imgLabel: "RDCU-Tx UNIT IMAGE",
+              imgSub: "Replace src with RDCU-Tx Hardware Photo (16:9 Cover)"
+            },
+            {
+              key: "neptuno",
+              name: "NEPTUNO-1 / 2",
+              full: "Voice & Radar Recording System (VRRS)",
+              role: "Records synchronized voice communications and radar/data streams, tapped from audio interface/filter & cross-panel.",
+              io: "In: UCS/audio interface/filter & cross-panel audio + LAN data | Out: Synchronized replay & NEP-SUP",
+              imgLabel: "NEPTUNO-1 / 2 RECORDER IMAGE",
+              imgSub: "Replace src with Neptuno VRRS Rack Photo (16:9 Cover)"
+            },
+            {
+              key: "ntp",
+              name: "NTP / CTS",
+              full: "Common Timing System & Network Time Protocol",
+              role: "Derives master time from GPS antenna and distributes synchronized UTC time across servers, CWPs & recorders via NTP.",
+              io: "In: GPS antenna time signal | Out: NTP/CTS time sync across automation LANs & nodes",
+              imgLabel: "NTP / CTS TIME SERVER IMAGE",
+              imgSub: "Replace src with GPS / NTP Master Clock Photo (16:9 Cover)"
+            },
+            {
+              key: "drf",
+              name: "DRF-1 / DRF-2",
+              full: "Data Recording Facility",
+              role: "Continuous ATC surveillance/flight/system data & screen recording and archiving for post-incident analysis and replay.",
+              io: "In: LAN-1, LAN-2 & LAN-3 operational traffic | Out: Recorded archives & SDD-6 replay",
+              imgLabel: "DRF-1 / DRF-2 ARCHIVE IMAGE",
+              imgSub: "Replace src with DRF Workstation/Server Photo (16:9 Cover)"
+            }
+          ];
+
+          return `
+            <div class="h-full flex flex-col justify-between gap-3 slide-enter" id="slide6-root">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">Server Room Inspector</span>
+                  <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">Core Subsystems &amp; Processing Roles</h2>
+                </div>
+                </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 my-auto items-stretch">
+                <!-- Single-Column Subsystem Selector -->
+                <div id="srv-tabs-list" class="lg:col-span-4 flex flex-col gap-1.5 max-h-[395px] overflow-y-auto thin-scroll pr-1">
+                  ${servers.map((s, idx) => `
+                    <button type="button" data-srv="${s.key}" data-search="${(s.name + ' ' + s.full + ' ' + s.role + ' ' + s.io).toLowerCase()}" class="srv-tab px-3.5 py-2 rounded-xl text-left font-mono text-xs border transition cursor-pointer flex items-center justify-between gap-2 ${idx === 0 ? 'bg-sky-600 text-white border-sky-400 font-semibold' : 'theme-card'}">
+                      <div class="truncate">
+                        <div class="font-bold">${s.name}</div>
+                        <div class="text-[10px] opacity-85 truncate">${s.full}</div>
+                      </div>
+                      <span class="shrink-0 opacity-75">${ICONS.arrowRight}</span>
+                    </button>
+                  `).join("")}
+                </div>
+
+                <!-- Adjacent Info + Image Placeholder Panel -->
+                <div class="lg:col-span-8 flex flex-col justify-between gap-3">
+                  <div id="srv-detail-card" class="theme-card border rounded-2xl p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3"></div>
+                  <div class="theme-inset border rounded-xl px-4 py-2 font-mono text-xs theme-muted flex flex-wrap justify-between gap-2">
+                    <span>OS: <strong class="theme-secondary">RHEL</strong></span>
+                    <span>DB: <strong class="theme-accent">PostgreSQL</strong></span>
+                    <span>LANs: <strong class="theme-emerald">10.161.75.x / 10.162.75.x / DRA</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      },
+
+     // SLIDE 7: Area Control, Approach & Tower, Operational Supervisor, Technical Supervisor, Ancillary + Cover Image Placeholders
+      {
+        id: 7,
+        chapter: "Workstations & Operational Positions",
+        badge: "07 • POSITIONS & ANCILLARY",
+        title: "Operational, Supervisory, Tower, Approach & Ancillary Positions",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3 slide-enter" id="slide7-root">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">All Operational &amp; Support Consoles</span>
+                <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">Area, Approach &amp; Tower, Supervisors &amp; Ancillary</h2>
+              </div>
+              <div class="flex flex-wrap gap-1.5" id="s7-cat-bar">
+                <button type="button" data-cat="area" class="s7-cat px-3 py-1.5 rounded-xl font-mono text-xs font-semibold bg-sky-600 text-white cursor-pointer">Area Control</button>
+                <button type="button" data-cat="approach_tower" class="s7-cat px-3 py-1.5 rounded-xl font-mono text-xs theme-card border cursor-pointer">Approach &amp; Tower</button>
+                <button type="button" data-cat="operational" class="s7-cat px-3 py-1.5 rounded-xl font-mono text-xs theme-card border cursor-pointer">Operational Sup</button>
+                <button type="button" data-cat="technical" class="s7-cat px-3 py-1.5 rounded-xl font-mono text-xs theme-card border cursor-pointer">Technical Sup</button>
+                <button type="button" data-cat="ancillary" class="s7-cat px-3 py-1.5 rounded-xl font-mono text-xs theme-card border cursor-pointer">Ancillary Workstations</button>
+              </div>
+            </div>
+
+            <div id="s7-detail-panel" class="theme-card border rounded-2xl p-4 sm:p-5 my-auto flex-1 flex flex-col justify-center"></div>
+
+            
+          </div>
+        `
+      },
+
+      // SLIDE 8 (Old Slide 12): Surveillance Sites — Keep Same
+      {
+        id: 8,
+        chapter: "Surveillance Inputs, Data Flow & Close",
+        badge: "08 • SURVEILLANCE SITES",
+        title: "Surveillance Sites: Where Does Each Feed Come From?",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3.5 slide-enter" id="slide8-root">
+            <div>
+              <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">Surveillance Sites • Tap a Site</span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">Where Does Each Feed Come From?</h2>
+            </div>
+
+            <div id="s8-tab-bar" class="stagger-item flex flex-wrap gap-2" style="animation-delay:60ms;"></div>
+
+            <div id="s8-panel" class="theme-card border rounded-2xl p-5 sm:p-6 my-auto space-y-4"></div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div class="stagger-item theme-card border rounded-xl p-3" style="animation-delay:140ms;">
+                <span class="font-mono font-bold theme-accent">PORT eth4:</span>
+                <span class="theme-secondary ml-1"><strong>VABP</strong>, <strong>VOHS</strong>, <strong>VAID</strong> arrive over WAN links.</span>
+              </div>
+              <div class="stagger-item theme-card border rounded-xl p-3" style="animation-delay:200ms;">
+                <span class="font-mono font-bold theme-emerald">PORT eth6:</span>
+                <span class="theme-secondary ml-1"><strong>VAJB</strong>, <strong>VAAU</strong>, <strong>VOUZ</strong> and local VANP ADS-B; both RDCU-Rx units receive every feed.</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // SLIDE 9 (Old Slide 13): How Data Flows — Keep Same
+      {
+        id: 9,
+        chapter: "Surveillance Inputs, Data Flow & Close",
+        badge: "09 • DATA FLOW",
+        title: "Big Picture: How Data Flows",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3.5 slide-enter">
+            <div>
+              <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">Big Picture • Sensor to Controller</span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">How Data Flows Through the System</h2>
+            </div>
+
+            <div class="stagger-item theme-inset border rounded-2xl p-3 sm:p-4 my-auto" style="animation-delay:80ms;">
+              <svg viewBox="0 0 760 270" class="w-full h-auto max-h-[330px]">
+                <g font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle" fill="var(--svg-subtext)">
+                  <text x="70" y="12">SOURCES</text>
+                  <text x="265" y="12">CAPTURE</text>
+                  <text x="455" y="12">PROCESSING</text>
+                  <text x="665" y="12">OUTPUTS</text>
+                </g>
+                <g transform="translate(0,20)">
+                  <rect x="10" y="20" width="120" height="50" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-primary)" stroke-width="1.8"/>
+                  <text x="70" y="50" text-anchor="middle" fill="var(--svg-text)" font-size="12" font-weight="600">Radars (PSR/SSR)</text>
+                  <rect x="10" y="100" width="120" height="50" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-primary)" stroke-width="1.8"/>
+                  <text x="70" y="130" text-anchor="middle" fill="var(--svg-text)" font-size="12" font-weight="600">ADS-B stations</text>
+                  <rect x="10" y="180" width="120" height="50" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-primary)" stroke-width="1.8"/>
+                  <text x="70" y="210" text-anchor="middle" fill="var(--svg-text)" font-size="12" font-weight="600">AFTN / AMSS</text>
+
+                  <rect x="210" y="40" width="110" height="60" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-emerald)" stroke-width="2"/>
+                  <text x="265" y="68" text-anchor="middle" fill="var(--svg-text)" font-size="13" font-weight="bold">RDCU-Rx</text>
+                  <text x="265" y="86" text-anchor="middle" fill="var(--accent-emerald)" font-size="10.5" font-family="JetBrains Mono">data capture</text>
+                  <rect x="210" y="150" width="110" height="60" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-emerald)" stroke-width="2"/>
+                  <text x="265" y="178" text-anchor="middle" fill="var(--svg-text)" font-size="13" font-weight="bold">FDP</text>
+                  <text x="265" y="196" text-anchor="middle" fill="var(--accent-emerald)" font-size="10.5" font-family="JetBrains Mono">flight plans</text>
+
+                  <rect x="400" y="95" width="110" height="60" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-emerald)" stroke-width="2.2"/>
+                  <text x="455" y="123" text-anchor="middle" fill="var(--svg-text)" font-size="13" font-weight="bold">SDP / SNET</text>
+                  <text x="455" y="141" text-anchor="middle" fill="var(--accent-emerald)" font-size="10.5" font-family="JetBrains Mono">tracking + SNET</text>
+
+                  <rect x="590" y="30" width="150" height="50" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-amber)" stroke-width="1.8"/>
+                  <text x="665" y="60" text-anchor="middle" fill="var(--svg-text)" font-size="12" font-weight="600">SDD controller screens</text>
+                  <rect x="590" y="100" width="150" height="50" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-amber)" stroke-width="1.8"/>
+                  <text x="665" y="130" text-anchor="middle" fill="var(--svg-text)" font-size="12" font-weight="600">DRF recording</text>
+                  <rect x="590" y="170" width="150" height="50" rx="9" fill="var(--svg-box-bg)" stroke="var(--accent-amber)" stroke-width="1.8"/>
+                  <text x="665" y="200" text-anchor="middle" fill="var(--svg-text)" font-size="12" font-weight="600">RDCU-Tx to other sites</text>
+
+                  <path class="flow-dash" stroke="var(--accent-primary)" stroke-width="2" fill="none" d="M130 45H210M130 125L170 125 170 70 210 70"/>
+                  <path class="flow-dash" stroke="var(--accent-primary)" stroke-width="2" fill="none" d="M130 205H210"/>
+                  <path class="flow-dash" stroke="var(--accent-emerald)" stroke-width="2.2" fill="none" d="M320 70L360 70 360 125 400 125M320 180L360 180 360 125"/>
+                  <path class="flow-dash" stroke="var(--accent-amber)" stroke-width="2.4" fill="none" d="M510 125L550 125 550 55 590 55M510 125H590M510 125L550 125 550 195 590 195"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="stagger-item theme-inset border-l-4 border-l-emerald-400 border rounded-xl px-4 py-2.5 text-xs sm:text-sm theme-secondary" style="animation-delay:160ms;">
+              Animated lines show data moving from <strong class="theme-accent">sensors</strong> to <strong class="theme-emerald">processing</strong> to the <strong class="theme-amber">controller</strong>.
+            </div>
+          </div>
+        `
+      },
+
+      // SLIDE 10 (Old Slide 14): Inputs: What Feeds the System + Summary Section
+      {
+        id: 10,
+        chapter: "Surveillance Inputs, Data Flow & Close",
+        badge: "10 • INPUTS & SUMMARY",
+        title: "Inputs: What Feeds the System & Key Summary",
+        render: () => `
+          <div class="h-full flex flex-col justify-between gap-3 slide-enter">
+            <!-- Header -->
+            <div class="flex flex-wrap items-end justify-between gap-2">
+              <div>
+                <span class="font-mono text-xs theme-emerald font-bold uppercase tracking-wider">Inputs &amp; Key Takeaways</span>
+                <h2 class="text-2xl sm:text-3xl font-bold mt-0.5">What Feeds the System &amp; Summary</h2>
+              </div>
+              <span class="font-mono text-xs theme-accent">INDRA AIRCON 2100 • VANP NAGPUR</span>
+            </div>
+
+            <!-- Side-by-Side Split: Left = 4 Input Source Families | Right = Executive Summary -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 my-auto items-stretch">
+              <!-- Left Column: What Feeds the System (2x2 Grid) -->
+              <div class="stagger-item lg:col-span-7 flex flex-col gap-2.5" style="animation-delay:60ms;">
+                <div class="flex items-center justify-between px-1">
+                  <span class="font-mono text-xs font-bold theme-accent uppercase tracking-wider">What Feeds the System</span>
+                  <span class="font-mono text-[11px] theme-muted">4 Source Families</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 flex-1">
+                  <div class="theme-card border border-t-4 border-t-sky-400 rounded-2xl p-3.5 flex flex-col justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-8 h-8 rounded-lg theme-inset border ico-box flex items-center justify-center theme-accent text-sm">${ICONS.satelliteDish}</div>
+                      <h3 class="text-sm sm:text-base font-bold theme-accent">Radar</h3>
+                    </div>
+                    <p class="text-xs theme-secondary leading-relaxed">Primary (PSR) and secondary (SSR) plots and tracks.</p>
+                    <div class="flex flex-wrap gap-1">
+                      ${["VANP", "VABP", "VOHS", "VAAU", "VOUZ"].map(s => `<span class="px-2 py-0.5 rounded-full theme-inset border font-mono text-[10px] theme-accent">${s}</span>`).join("")}
+                    </div>
+                  </div>
+
+                  <div class="theme-card border border-t-4 border-t-emerald-400 rounded-2xl p-3.5 flex flex-col justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-8 h-8 rounded-lg theme-inset border ico-box flex items-center justify-center theme-emerald text-sm">${ICONS.planeUp}</div>
+                      <h3 class="text-sm sm:text-base font-bold theme-emerald">ADS-B</h3>
+                    </div>
+                    <p class="text-xs theme-secondary leading-relaxed">Aircraft broadcast their position, identity and vector.</p>
+                    <div class="flex flex-wrap gap-1">
+                      ${["VANP", "VAID", "VAJB"].map(s => `<span class="px-2 py-0.5 rounded-full theme-inset border font-mono text-[10px] theme-emerald">${s}</span>`).join("")}
+                    </div>
+                  </div>
+
+                  <div class="theme-card border border-t-4 border-t-amber-400 rounded-2xl p-3.5 flex flex-col justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-8 h-8 rounded-lg theme-inset border ico-box flex items-center justify-center theme-amber text-sm">${ICONS.fileLines}</div>
+                      <h3 class="text-sm sm:text-base font-bold theme-amber">Flight Data</h3>
+                    </div>
+                    <p class="text-xs theme-secondary leading-relaxed">Flight plans and messages from AFTN via AMSS, plus weather (METAR).</p>
+                    <div class="flex flex-wrap gap-1">
+                      ${["AFTN", "AMSS", "METAR"].map(s => `<span class="px-2 py-0.5 rounded-full theme-inset border font-mono text-[10px] theme-amber">${s}</span>`).join("")}
+                    </div>
+                  </div>
+
+                  <div class="theme-card border border-t-4 border-t-rose-400 rounded-2xl p-3.5 flex flex-col justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-8 h-8 rounded-lg theme-inset border ico-box flex items-center justify-center theme-rose text-sm">${ICONS.clock}</div>
+                      <h3 class="text-sm sm:text-base font-bold theme-rose">Voice &amp; Time</h3>
+                    </div>
+                    <p class="text-xs theme-secondary leading-relaxed">UCS telephone and audio interface for recording; GPS antenna for time sync.</p>
+                    <div class="flex flex-wrap gap-1">
+                      ${["UCS", "GPS", "NTP"].map(s => `<span class="px-2 py-0.5 rounded-full theme-inset border font-mono text-[10px] theme-rose">${s}</span>`).join("")}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Presentation Summary -->
+              <div class="stagger-item lg:col-span-5 theme-card border-l-4 border-l-emerald-400 border rounded-2xl p-4 flex flex-col justify-between gap-3" style="animation-delay:160ms;">
+                <div class="border-b border-sky-500/20 pb-2.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="font-mono text-xs font-bold theme-emerald uppercase tracking-wider flex items-center gap-1.5">
+                      ${ICONS.circleCheck}<span>Presentation Summary</span>
+                    </span>
+                    <span class="font-mono text-[10px] px-2 py-0.5 rounded-full theme-inset border theme-amber">20-01-2012 • TYPE-C</span>
+                  </div>
+                  <p class="text-xs theme-muted mt-1">Indra AIRCON 2100 operational wrap-up at VANP Nagpur</p>
+                </div>
+
+                <div class="flex flex-col gap-2.5 text-xs theme-secondary flex-1 justify-center">
+                  <div class="theme-inset border rounded-xl p-3">
+                    <strong class="theme-accent block mb-0.5">01 • Multi-Sensor Fusion &amp; Safety</strong>
+                    Integrates 8 external/local radar &amp; ADS-B feeds with AFTN/AMSS flight plans, running real-time SNET (STCA, MSAW, APW, CLAM/RAM).
+                  </div>
+                  <div class="theme-inset border rounded-xl p-3">
+                    <strong class="theme-emerald block mb-0.5">02 • Dual-Redundant Architecture</strong>
+                    Active/standby SDP, FDP, RDCU-Rx, DRF, and Neptuno servers synced via GPS/NTP across redundant LAN-1/2 &amp; DRA networks.
+                  </div>
+                  <div class="theme-inset border rounded-xl p-3">
+                    <strong class="theme-amber block mb-0.5">03 • Unified Operational Control</strong>
+                    Serves ACC, Approach, Tower (VCR), ARO, WSO, and Tech Sup consoles with synchronous audio + radar replay.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // SLIDE 11: Thank You Slide
+      {
+        id: 11,
+        chapter: "Surveillance Inputs, Data Flow & Close",
+        badge: "11 • THANK YOU",
+        title: "Thank You",
+        render: () => `
+          <div class="h-full flex flex-col justify-center gap-4 slide-enter">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto">
+              <div class="lg:col-span-7 space-y-4">
+                <div class="stagger-item inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full theme-inset border font-mono text-xs" style="animation-delay:40ms;">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span class="theme-accent font-bold">AAI CNS NAGPUR</span>
+                  <span class="theme-muted">•</span>
+                  <span class="theme-amber font-semibold">INDRA AIRCON 2100 (TYPE-C)</span>
+                </div>
+
+                <h1 class="stagger-item text-6xl sm:text-7xl lg:text-[72px] font-bold leading-tight tracking-tight" style="animation-delay:100ms;">
+                  Thank <span class="theme-accent">You</span>
+                </h1>
+
+                
+
+                <div class="stagger-item theme-card border-l-4 border-l-emerald-400 border rounded-2xl p-4 flex items-center gap-3 max-w-md" style="animation-delay:220ms;">
+                  <div class="w-11 h-11 rounded-xl theme-inset border ico-box flex items-center justify-center theme-emerald text-lg shrink-0">
+                    ${ICONS.userAstronaut}
+                  </div>
+                  <div>
+                    <div class="font-mono text-[11px] uppercase tracking-wider theme-muted">Presented By</div>
+                    <div class="text-lg font-bold">Sanchit Padwekar</div>
+                    <div class="font-mono text-xs theme-accent">JE-CNS • AAI Nagpur (VANP)</div>
+                  </div>
+                </div>
+
+                <div class="stagger-item flex flex-wrap gap-2.5 pt-1" style="animation-delay:280ms;">
+                  <button type="button" onclick="toggleIndexDrawer(true)" class="px-4 py-2 rounded-xl theme-card border font-semibold text-xs sm:text-sm flex items-center gap-2 cursor-pointer">
+                    <span class="theme-amber">${ICONS.tableCellsLarge}</span><span>Slide Index</span>
+                  </button>
+                  <button type="button" onclick="goToSlide(1)" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-sky-900/30">
+                    ${ICONS.rotateLeft}<span>Restart Deck</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="stagger-item lg:col-span-5 flex flex-col items-center justify-center gap-3" style="animation-delay:200ms;">
+                <div class="title-radar flex items-center justify-center">
+                  <div class="radar-cross-v"></div>
+                  <span class="radar-blip" style="top:28%; left:34%;"></span>
+                  <span class="radar-blip" style="top:58%; left:66%; animation-delay:0.9s;"></span>
+                  <span class="radar-blip" style="top:72%; left:42%; animation-delay:1.7s;"></span>
+                  <div class="relative z-10 px-2.5 py-1 rounded-md theme-inset border font-mono text-[11px] theme-accent font-bold">
+                    VANP • 21.09°N 79.05°E
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    let currentSlideIndex = 0;
+    let toastTimer = null;
+    let sddInterval = null;
+
+    function showToast(msg) {
+      const banner = document.getElementById("toast-banner");
+      const text = document.getElementById("toast-text");
+      if (!banner || !text) return;
+      text.textContent = msg;
+      banner.classList.remove("hidden");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => banner.classList.add("hidden"), 2300);
+    }
+
+    function buildIndexDrawerAndDots() {
+      const drawerGrid = document.getElementById("index-drawer-grid");
+      const dots = document.getElementById("step-dots");
+
+      if (drawerGrid) {
+        drawerGrid.innerHTML = SLIDES.map((s, idx) => `
+          <button type="button" data-idx-jump="${idx}" class="p-3 rounded-2xl border text-left transition cursor-pointer flex flex-col justify-between gap-1 ${idx === currentSlideIndex ? 'bg-sky-600 text-white border-sky-400 font-semibold' : 'theme-card'}">
+            <div class="flex items-center justify-between font-mono text-[11px]">
+              <span class="${idx === currentSlideIndex ? 'text-sky-100' : 'theme-accent'}">SLIDE ${String(s.id).padStart(2, "0")}</span>
+              <span class="opacity-75 truncate max-w-[140px]">${s.chapter.split(" ")[0]}</span>
+            </div>
+            <div class="text-xs font-bold leading-snug line-clamp-2">${s.title}</div>
+          </button>
+        `).join("");
+
+        drawerGrid.querySelectorAll("[data-idx-jump]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.getElementById("index-drawer")?.classList.add("hidden");
+            goToSlide(Number(btn.dataset.idxJump) + 1);
+          });
+        });
+      }
+
+      if (dots) {
+        dots.innerHTML = SLIDES.map((s, idx) => `
+          <button type="button" data-dot-idx="${idx}" title="Slide ${s.id}: ${s.title}" class="h-2 rounded-full transition-all cursor-pointer ${idx === currentSlideIndex ? 'w-6 bg-sky-400' : 'w-2 bg-sky-500/35 hover:bg-sky-400/70'}"></button>
+        `).join("");
+
+        dots.querySelectorAll("[data-dot-idx]").forEach(btn => {
+          btn.addEventListener("click", () => goToSlide(Number(btn.dataset.dotIdx) + 1));
+        });
+      }
+    }
+
+    function goToSlide(slideNumber) {
+      const clamped = Math.max(1, Math.min(SLIDES.length, Number(slideNumber) || 1));
+      currentSlideIndex = clamped - 1;
+      renderSlide();
+    }
+
+    function nextSlide() {
+      if (currentSlideIndex < SLIDES.length - 1) {
+        currentSlideIndex += 1;
+        renderSlide();
+      } else {
+        showToast(`End of presentation (Slide ${SLIDES.length} of ${SLIDES.length})`);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex -= 1;
+        renderSlide();
+      } else {
+        showToast(`Already on Title Slide (01 of ${String(SLIDES.length).padStart(2, "0")})`);
+      }
+    }
+
+    function renderSlide() {
+      if (sddInterval) {
+        clearInterval(sddInterval);
+        sddInterval = null;
+      }
+
+      const slide = SLIDES[currentSlideIndex];
+      const mount = document.getElementById("slide-mount");
+      const counter = document.getElementById("slide-counter");
+      const badge = document.getElementById("slide-badge");
+      const progress = document.getElementById("progress-bar");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const stage = document.getElementById("deck-stage");
+
+      if (!slide || !mount) return;
+
+      mount.innerHTML = slide.render();
+      if (stage) stage.scrollTop = 0;
+
+      if (counter) counter.textContent = `${String(slide.id).padStart(2, "0")} / ${String(SLIDES.length).padStart(2, "0")}`;
+      if (badge) badge.textContent = slide.badge;
+      if (progress) progress.style.width = `${((currentSlideIndex + 1) / SLIDES.length) * 100}%`;
+
+      if (prevBtn) prevBtn.disabled = currentSlideIndex === 0;
+      if (nextBtn) nextBtn.disabled = currentSlideIndex === SLIDES.length - 1;
+
+      try {
+        history.replaceState(null, "", `#s${slide.id}`);
+      } catch (e) {}
+
+      buildIndexDrawerAndDots();
+      bindSlideInteractions(slide.id);
+    }
+
+
+    // Theme Cycling (Press 'T')
+    const THEMES = [
+      { id: "radar-night", label: "Radar Night" },
+      { id: "daylight-atc", label: "Daylight ATC" },
+      { id: "amber-phosphor", label: "Amber Phosphor" },
+      { id: "emerald-ops", label: "Emerald Ops" },
+      { id: "crimson-alert", label: "Crimson Alert" }
+    ];
+
+    function cycleTheme() {
+      const current = document.body.getAttribute("data-theme") || THEMES[0].id;
+      const idx = THEMES.findIndex(t => t.id === current);
+      const next = THEMES[(idx + 1) % THEMES.length];
+      document.body.setAttribute("data-theme", next.id);
+      showToast(`Theme: ${next.label}`);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select") return;
+      if (e.key.toLowerCase() === "t") {
+        e.preventDefault();
+        cycleTheme();
+      }
+    });
+
+    function bindSlideInteractions(slideId) {
+      // SLIDE 5 (Combined Old Slides 6 & 7): SDD Image + FDD Image + Live Safety Nets Radar Animation
+      if (slideId === 5) {
+        const tabsData = [
+          {
+            title: "SDD – Situation Data Display",
+            subtitle: "Unified, multi-sensor air picture for every sector controller",
+            points: [
+              "Fuses all primary/secondary radars and 1090ES ADS-B feeds into one clean, labelled air picture",
+              "Displays callsign, cleared/current flight level, groundspeed, and velocity vector on every track",
+              "Provides identical situational awareness across ACC, Approach, and Tower positions",
+              "Supports synchronized PBK replay mode (SDD-6) for incident analysis and training"
+            ],
+            contrast: "Without SDD: Controllers interpret raw blips on separate sensor screens without automated target identity.",
+            imgSrc: "./images/sdd.jpeg",
+            imgCaption: "SDD Controller Radar Screen "
+          },
+          {
+            title: "FDD / FDP – Flight Data Display & Processor",
+            subtitle: "Automated flight plan lifecycle from AFTN/AMSS to sector handover",
+            points: [
+              "Creates, validates, and updates flight plans automatically from AFTN / AMSS messages",
+              "Correlates flight plan data (callsign, aircraft type, route) with live surveillance tracks",
+              "Replaces error-prone handwritten paper flight progress strips with electronic flight data",
+              "Automates sector coordination, handovers, and air navigation billing records"
+            ],
+            contrast: "Without FDD/FDP: Manual strip writing, manual altitude updates, and high workload during peak traffic.",
+            imgSrc: "./images/fdd.png",
+            imgCaption: "FDD Electronic Flight Data Console "
+          }
+        ];
+
+        const panel = document.getElementById("s5-tab-panel");
+        const btns = Array.from(document.querySelectorAll(".s5-tab"));
+
+        const initSafetyNetSimulator = () => {
+          let safetyNetsOn = true;
+          let selectedAcIdx = null;
+          let aircraft = [];
+          const zone = { x: 425, y: 38, w: 130, h: 92 };
+
+          const resetSim = () => {
+            aircraft = [
+              { callsign: "AIC101", x: 55, y: 155, vx: 0.65, vy: 0, fl: 330 },
+              { callsign: "IGO203", x: 300, y: 295, vx: 0, vy: -0.52, fl: 330 },
+              { callsign: "SEJ305", x: 495, y: 285, vx: -0.1, vy: -0.48, fl: 290 },
+              { callsign: "VTI412", x: 110, y: 65, vx: 0.42, vy: 0.08, fl: 370 }
+            ];
+            selectedAcIdx = null;
+            const infoEl = document.getElementById("sim-ac-info");
+            if (infoEl) infoEl.textContent = "Tap any aircraft target on the radar screen to inspect its callsign, flight level, speed, and alert state.";
+          };
+          resetSim();
+
+          const svgEl = document.getElementById("sdd-sim-svg");
+          const alertStatusEl = document.getElementById("sim-alert-status");
+          const acInfoEl = document.getElementById("sim-ac-info");
+
+          const renderFrame = () => {
+            if (!svgEl) return;
+            const alerts = [];
+
+            aircraft.forEach(a => {
+              a.x += a.vx;
+              a.y += a.vy;
+              if (a.x > 590) a.x = 10;
+              if (a.x < 10) a.x = 590;
+              if (a.y < 10) a.y = 300;
+              if (a.y > 300) a.y = 10;
+              a.warn = false;
+            });
+
+            if (safetyNetsOn) {
+              aircraft.forEach((a, i) => {
+                if (a.x > zone.x && a.x < zone.x + zone.w && a.y > zone.y && a.y < zone.y + zone.h) {
+                  a.warn = true;
+                  alerts.push(`APW • ${a.callsign}`);
+                }
+                for (let j = i + 1; j < aircraft.length; j++) {
+                  const b = aircraft[j];
+                  if (Math.hypot(a.x - b.x, a.y - b.y) < 58 && Math.abs(a.fl - b.fl) < 10) {
+                    a.warn = true;
+                    b.warn = true;
+                    alerts.push(`STCA • ${a.callsign} / ${b.callsign}`);
+                  }
+                }
+              });
+            }
+
+            let svgMarkup = `
+              <g stroke="#1b4338" stroke-width="1" fill="none">
+                <circle cx="300" cy="155" r="55" />
+                <circle cx="300" cy="155" r="110" />
+                <circle cx="300" cy="155" r="165" />
+                <line x1="0" y1="155" x2="600" y2="155" stroke-dasharray="4 4" />
+                <line x1="300" y1="0" x2="300" y2="310" stroke-dasharray="4 4" />
+              </g>
+              <rect x="${zone.x}" y="${zone.y}" width="${zone.w}" height="${zone.h}" rx="6" fill="rgba(232, 89, 12, 0.16)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4" />
+              <text x="${zone.x + 8}" y="${zone.y + 16}" fill="#fbbf24" font-size="10.5" font-family="JetBrains Mono" font-weight="bold">RESTRICTED AREA</text>
+            `;
+
+            aircraft.forEach((a, idx) => {
+              const color = a.warn ? "#ff4d5e" : (selectedAcIdx === idx ? "#00e5ff" : "#7CFFB2");
+              const r = a.warn ? 8.5 : 6;
+              svgMarkup += `
+                <g data-ac="${idx}" style="cursor:pointer;">
+                  <line x1="${a.x}" y1="${a.y}" x2="${a.x + a.vx * 32}" y2="${a.y + a.vy * 32}" stroke="${color}" stroke-width="2" />
+                  ${a.warn ? `<circle cx="${a.x}" cy="${a.y}" r="15" fill="none" stroke="#ff4d5e" stroke-width="1.5" stroke-dasharray="3 3" />` : ""}
+                  <circle cx="${a.x}" cy="${a.y}" r="${r}" fill="${color}" />
+                  <text x="${a.x + 11}" y="${a.y - 7}" fill="${color}" font-size="11.5" font-family="JetBrains Mono" font-weight="bold">${a.callsign}</text>
+                  <text x="${a.x + 11}" y="${a.y + 7}" fill="${color}" font-size="10" font-family="JetBrains Mono">FL${a.fl} • ${Math.round(Math.hypot(a.vx, a.vy) * 720)}kt</text>
+                </g>
+              `;
+            });
+
+            svgEl.innerHTML = svgMarkup;
+
+            if (alertStatusEl) {
+              const uniqueAlerts = [...new Set(alerts)];
+              if (uniqueAlerts.length > 0) {
+                alertStatusEl.innerHTML = uniqueAlerts.map(al => `<span class="px-2.5 py-1 rounded-lg bg-rose-600 text-white font-mono text-xs font-bold animate-pulse">⚠ ${al}</span>`).join("");
+              } else if (safetyNetsOn) {
+                alertStatusEl.innerHTML = `<span class="px-2.5 py-1 rounded-lg bg-emerald-600/25 text-emerald-400 border border-emerald-500/40 font-mono text-xs font-semibold">✓ NOMINAL — NO ACTIVE ALERTS</span>`;
+              } else {
+                alertStatusEl.innerHTML = `<span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-400/40 font-mono text-xs font-semibold">SAFETY NETS DISABLED</span>`;
+              }
+            }
+
+            if (selectedAcIdx !== null && aircraft[selectedAcIdx] && acInfoEl) {
+              const sel = aircraft[selectedAcIdx];
+              const spd = Math.round(Math.hypot(sel.vx, sel.vy) * 720);
+              acInfoEl.innerHTML = `<strong class="theme-accent font-mono">${sel.callsign}</strong> • Flight Level <strong>FL${sel.fl}</strong> • Groundspeed <strong>${spd} kt</strong> • Status: <strong class="${sel.warn ? 'theme-rose' : 'theme-emerald'}">${sel.warn ? 'ALERT ACTIVE' : 'Normal Separation'}</strong>`;
+            }
+          };
+
+          svgEl?.addEventListener("click", (e) => {
+            const grp = e.target.closest("[data-ac]");
+            if (grp) {
+              selectedAcIdx = Number(grp.dataset.ac);
+              renderFrame();
+            }
+          });
+
+          document.getElementById("sim-sn-btn")?.addEventListener("click", function () {
+            safetyNetsOn = !safetyNetsOn;
+            this.textContent = `Safety Nets: ${safetyNetsOn ? "ON" : "OFF"}`;
+            this.className = `px-2.5 py-1 rounded-lg font-mono text-xs font-semibold text-white cursor-pointer ${safetyNetsOn ? "bg-emerald-600" : "bg-slate-600"}`;
+            renderFrame();
+          });
+
+          document.getElementById("sim-cf-btn")?.addEventListener("click", () => {
+            const a = aircraft[0];
+            const b = aircraft[1];
+            a.x = 120;
+            a.y = 165;
+            a.vx = 0.65;
+            a.vy = 0;
+            a.fl = 330;
+            b.x = 270;
+            b.y = 285;
+            b.vx = 0;
+            b.vy = -0.52;
+            b.fl = 330;
+            selectedAcIdx = 0;
+            renderFrame();
+            showToast("Converging trajectories set for AIC101 & IGO203 at FL330");
+          });
+
+          document.getElementById("sim-rs-btn")?.addEventListener("click", () => {
+            resetSim();
+            renderFrame();
+          });
+
+          renderFrame();
+          sddInterval = setInterval(renderFrame, 45);
+        };
+
+        const showTab = (idx) => {
+          if (sddInterval) {
+            clearInterval(sddInterval);
+            sddInterval = null;
+          }
+
+          btns.forEach((b, i) => {
+            const act = i === idx;
+            b.className = `s5-tab px-3.5 py-1.5 rounded-xl font-mono text-xs cursor-pointer ${act ? 'font-semibold bg-sky-600 text-white' : 'theme-card border'}`;
+          });
+
+          if (!panel) return;
+
+          if (idx === 2) {
+            // Safety Nets Tab: Keeps exact data from Slide 6 + Live SDD Radar Animation from Slide 7
+            panel.innerHTML = `
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center slide-enter">
+                <div class="lg:col-span-6 space-y-2.5">
+                  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-500/20 pb-2">
+                    <div>
+                      <h3 class="text-lg sm:text-xl font-bold theme-accent">Safety Nets (SNET)</h3>
+                      <p class="text-xs theme-muted">Automated real-time conflict &amp; hazard prediction inside SDP</p>
+                    </div>
+                  </div>
+                  <ul class="space-y-2 text-xs sm:text-sm theme-secondary">
+                    <li class="flex items-start gap-2"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.circleCheck}</span><span><strong>STCA (Short-Term Conflict Alert):</strong> Predicts impending loss of separation between aircraft</span></li>
+                    <li class="flex items-start gap-2"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.circleCheck}</span><span><strong>MSAW (Minimum Safe Altitude Warning):</strong> Alerts when an aircraft descends too low over terrain</span></li>
+                    <li class="flex items-start gap-2"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.circleCheck}</span><span><strong>APW (Area Proximity Warning):</strong> Warns before an aircraft penetrates restricted or danger airspace</span></li>
+                    <li class="flex items-start gap-2"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.circleCheck}</span><span><strong>CLAM / RAM &amp; Distress:</strong> Cleared level adherence, route conformance &amp; 7500/7600/7700</span></li>
+                  </ul>
+                  <div class="theme-inset border-l-4 border-l-amber-400 border rounded-xl p-2.5 text-xs theme-amber">
+                    <strong>Without Safety Nets:</strong> Only the controller's visual scan stands between aircraft and terrain or airspace hazards.
+                  </div>
+                </div>
+
+                <div class="lg:col-span-6 space-y-2.5">
+                  <div class="flex flex-wrap items-center justify-between gap-1.5">
+                    <div id="sim-alert-status" class="flex flex-wrap gap-1.5"></div>
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" id="sim-sn-btn" class="px-2.5 py-1 rounded-lg font-mono text-xs font-semibold bg-emerald-600 text-white cursor-pointer">Safety Nets: ON</button>
+                      <button type="button" id="sim-cf-btn" class="px-2.5 py-1 rounded-lg font-mono text-xs font-semibold bg-amber-600 text-white cursor-pointer">Create Conflict</button>
+                      <button type="button" id="sim-rs-btn" class="px-2.5 py-1 rounded-lg font-mono text-xs theme-card border cursor-pointer">Reset</button>
+                    </div>
+                  </div>
+                  <div class="rounded-2xl border border-sky-500/30 overflow-hidden bg-[#06121f] shadow-inner">
+                    <svg id="sdd-sim-svg" viewBox="0 0 600 310" class="w-full h-auto max-h-[245px] block"></svg>
+                  </div>
+                  <div class="theme-inset border rounded-xl px-3 py-1.5 text-xs theme-secondary" id="sim-ac-info">
+                    Tap any aircraft target on the radar screen to inspect its callsign, flight level, speed, and alert state.
+                  </div>
+                </div>
+              </div>
+            `;
+            initSafetyNetSimulator();
+          } else {
+            const d = tabsData[idx] || tabsData[0];
+            panel.innerHTML = `
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center slide-enter">
+                <div class="lg:col-span-7 space-y-3">
+                  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-500/20 pb-2.5">
+                    <div>
+                      <h3 class="text-xl sm:text-2xl font-bold theme-accent">${d.title}</h3>
+                      <p class="text-xs sm:text-sm theme-muted mt-0.5">${d.subtitle}</p>
+                    </div>
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-full theme-inset border theme-emerald">ACTIVE SUBSYSTEM</span>
+                  </div>
+                  <ul class="space-y-2 text-xs sm:text-sm theme-secondary">
+                    ${d.points.map(pt => `<li class="flex items-start gap-2.5"><span class="theme-emerald mt-0.5 shrink-0">${ICONS.circleCheck}</span><span>${pt}</span></li>`).join("")}
+                  </ul>
+                  <div class="theme-inset border-l-4 border-l-amber-400 border rounded-xl p-3 text-xs sm:text-sm theme-amber">
+                    <strong>Operational Contrast:</strong> ${d.contrast}
+                  </div>
+                </div>
+
+                <!-- Animated Image Placeholder Frame -->
+                <div class="lg:col-span-5 flex flex-col gap-2">
+                  <div class="img-placeholder-frame rounded-2xl aspect-video w-full shadow-lg">
+                    <div class="scan-line"></div>
+                    <img src="${d.imgSrc}" alt="${d.imgCaption}" class="cover-img" />
+                    
+                  </div>
+                  <div class="font-mono text-[11px] theme-muted text-center">${d.imgCaption}</div>
+                </div>
+              </div>
+            `;
+          }
+        };
+
+        btns.forEach(b => b.addEventListener("click", () => showTab(Number(b.dataset.tab))));
+        showTab(0);
+      }
+
+      // SLIDE 6 (Old Slide 8): Single-Column Server Selector + Adjacent Info & Image Placeholder
+      if (slideId === 6) {
+        const servers = [
+          {
+            key: "sdp",
+            name: "SDP-1 / SDP-2",
+            full: "Situation Data Processor & SNET",
+            role: "Plot/track processing, mono/multi-radar tracking & fusion, plus Safety Nets (SNET): STCA, MSAW, APW, CLAM, RAM & distress alerts.",
+            io: "In: RDCU-Rx ASTERIX plots/tracks + FDP flight correlation | Out: CWP/SDD system tracks, SNET alerts & DRF",
+            imgSrc: "./images/sdp.png",
+            imgCaption: "SDP-1 / SDP-2 Server Rack Placeholder"
+          },
+          {
+            key: "fdp",
+            name: "FDP-1 / FDP-2",
+            full: "Flight Data Processor",
+            role: "FPL / RPL / AFTN flight plan processing, 4D trajectory prediction, sector coordination & cold/warm start recovery.",
+            io: "In: AMSS/AFTN messages & CWP updates | Out: SDP correlation, FDD/strips & billing",
+            imgSrc: "./images/fdp.png",
+            imgCaption: "FDP-1 / FDP-2 Flight Data Server Placeholder"
+          },
+          {
+            key: "rdcu-rx",
+            name: "RDCU-Rx1 / Rx2",
+            full: "Radar Data Communication Unit (Receive)",
+            role: "Serial/LAN ingestion from radar & ADS-B sensors, format conversion to ASTERIX, and bypass/DRA data feed.",
+            io: "In: 8 Radar & ADS-B sites (eth4 / eth6 via switches/routers) | Out: SDP-1/2, DRF-1/2 & LAN-3 DRA",
+            imgSrc: "./images/rdcu-rx.png",
+            imgCaption: "RDCU-Rx1 / Rx2 Communication Unit Placeholder"
+          },
+          {
+            key: "rdcu-tx",
+            name: "RDCU-Tx",
+            full: "Radar Data Communication Unit (Transmit)",
+            role: "Sends processed SDD/track data to external ATS/surveillance stations and supports data replay workflows.",
+            io: "In: Processed track/system stream | Out: Adjacent/external ATS stations & replay pipeline",
+            imgSrc: "./images/rdcu-tx.png",
+            imgCaption: "RDCU-Tx External Transmit Unit Placeholder"
+          },
+          {
+            key: "neptuno",
+            name: "NEPTUNO-1 / 2",
+            full: "Voice & Radar Recording System (VRRS)",
+            role: "Records synchronized voice communications and radar/data streams, tapped from audio interface/filter & cross-panel.",
+            io: "In: UCS/audio interface/filter & cross-panel audio + LAN data | Out: Synchronized replay & NEP-SUP",
+            imgSrc: "./images/nep.png",
+            imgCaption: "Neptuno-1 / 2 Voice & Radar Recorder Placeholder"
+          },
+          {
+            key: "ntp",
+            name: "NTP / CTS",
+            full: "Common Timing System & Network Time Protocol",
+            role: "Derives master time from GPS antenna and distributes synchronized UTC time across servers, CWPs & recorders via NTP.",
+            io: "In: GPS antenna time signal | Out: NTP/CTS time sync across automation LANs & nodes",
+            imgSrc:"./images/ntp.png",
+            imgCaption: "NTP / CTS Timing Server Placeholder"
+          },
+          {
+            key: "drf",
+            name: "DRF-1 / DRF-2",
+            full: "Data Recording Facility",
+            role: "Continuous ATC surveillance/flight/system data & screen recording and archiving for post-incident analysis and replay.",
+            io: "In: LAN-1, LAN-2 & LAN-3 operational traffic | Out: Recorded archives & SDD-6 replay",
+            imgSrc:"./images/drf.png",
+            imgCaption: "DRF-1 / DRF-2 Data Recording Facility Placeholder"
+          }
+        ];
+
+        const detailCard = document.getElementById("srv-detail-card");
+        const searchInput = document.getElementById("srv-search-input");
+        const tabs = Array.from(document.querySelectorAll(".srv-tab"));
+
+        const paintServer = (key) => {
+          const item = servers.find(s => s.key === key) || servers[0];
+          tabs.forEach(t => {
+            const active = t.dataset.srv === item.key;
+            t.className = `srv-tab px-3.5 py-2 rounded-xl text-left font-mono text-xs border transition cursor-pointer flex items-center justify-between gap-2 ${active ? 'bg-sky-600 text-white border-sky-400 font-semibold' : 'theme-card'}`;
+          });
+          if (detailCard) {
+            detailCard.innerHTML = `
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center my-auto slide-enter">
+                <div class="md:col-span-7 space-y-3">
+                  <div>
+                    <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full theme-inset border theme-emerald">SUBSYSTEM SPECIFICATION</span>
+                    <h3 class="text-lg sm:text-xl font-bold theme-accent mt-1.5">${item.name}</h3>
+                    <div class="font-mono text-xs theme-muted">${item.full}</div>
+                  </div>
+                  <p class="text-xs sm:text-sm theme-secondary leading-relaxed">${item.role}</p>
+                  <div class="pt-2.5 border-t border-sky-500/20 font-mono text-xs theme-amber leading-relaxed">${item.io}</div>
+                </div>
+
+                <!-- Adjacent Image Placeholder -->
+                <div class="md:col-span-5 flex flex-col gap-1.5">
+                  <div class="img-placeholder-frame rounded-2xl aspect-video w-full shadow-md">
+                    <div class="scan-line"></div>
+                    <img src="${item.imgSrc}" alt="${item.imgCaption}" class="cover-img" />
+                    
+                  </div>
+                  <div class="font-mono text-[10px] theme-muted text-center">${item.imgCaption}</div>
+                </div>
+              </div>
+            `;
+          }
+        };
+
+        tabs.forEach(t => t.addEventListener("click", () => paintServer(t.dataset.srv)));
+        searchInput?.addEventListener("input", (e) => {
+          const q = e.target.value.trim().toLowerCase();
+          tabs.forEach(t => {
+            const hay = t.dataset.search || "";
+            t.style.display = (!q || hay.includes(q)) ? "" : "none";
+          });
+          const firstVisible = tabs.find(t => t.style.display !== "none");
+          if (firstVisible) paintServer(firstVisible.dataset.srv);
+        });
+        paintServer("sdp");
+      }
+
+      // SLIDE 7: Area Control, Approach & Tower, Operational Sup, Technical Sup, Ancillary + Cover Image Placeholders
+      if (slideId === 7) {
+        const categories = {
+          area: {
+            badge: "AREA CONTROL • ACC POSITIONS",
+            title: "Area Control Workstations",
+            summary: "En-route airspace surveillance, sector control, and ARO pre-flight briefing displays across Nagpur FIR.",
+            items: [
+  { code: "SDD-1 FDD-1", name: "South Position", desc: "South sector aircraft surveillance and flight data display." },
+  { code: "SDD-2 FDD-2", name: "South Planner/Alpha", desc: "South sector traffic planning and flight data display." },
+  { code: "SDD-3 FDD-3", name: "North Position", desc: "North sector aircraft surveillance and flight data display." },
+  { code: "SDD-10 FDD-10", name: "North Planner/Alpha", desc: "Pre-flight briefing, flight plan and ATS reporting display." },
+  { code: "SDD-4 FDD-4", name: "Lower Sector", desc: "Lower sector aircraft surveillance and flight data display." }
+],
+            imgSrc: "./images/area.jpeg",
+            imgCaption: "Area Control Position"
+          },
+          approach_tower: {
+            badge: "APPROACH & TOWER • TWR / APP POSITIONS",
+            title: "Approach & Tower Workstations",
+            summary: "Approach and tower situational surveillance displays for terminal and aerodrome control operations.",
+            items: [
+              { code: "SDD-5 FDD-5", name: "Approach Position", desc: "Approach situational surveillance display." },
+              { code: "SDD-8 FDD-8", name: "Tower Position", desc: "Tower situational surveillance display." }
+            ],
+            imgSrc: "./images/tower.jpeg",
+            imgCaption: "Approach & Tower Position"
+          },
+          operational: {
+            badge: "OPERATIONAL SUPERVISOR POSITION • WSO",
+            title: "Operational Supervisor Position",
+            summary: "Operational watch supervision, sector control management, and synchronous radar replay.",
+            items: [
+              { code: "SDD-6 FDD-6", name: "Replay / Supervisor Display", desc: "Synchronous radar replay & operational supervisor display." },
+              { code: "CMD-1", name: "Operational Command", desc: "Operational command & watch supervision console." }
+            ],
+            imgSrc: "./images/ops.png",
+            imgCaption: "Operational Supervisor "
+          },
+          technical: {
+            badge: "TECHNICAL SUPERVISOR POSITION • CNS",
+            title: "Technical Supervisor Position",
+            summary: "Real-time CNS system monitoring, flight data supervision, command control, and data/voice recording.",
+            items: [
+              { code: "SDD-9", name: "Tech Surveillance Display", desc: "Technical supervisor surveillance & track status display." },
+              { code: "FDD-8", name: "Tech Flight Data Display", desc: "Technical supervisor flight data processing display." },
+              { code: "CMD-2", name: "Technical Command", desc: "Technical command & system health/alarm management." },
+              { code: "DRF 1 & 2", name: "Data Recording Facility", desc: "Continuous radar, flight & system data recording units 1 & 2." },
+              { code: "NEPTUNO", name: "Voice & Radar Recorder", desc: "Synchronized voice & radar recording subsystem." }
+            ],
+            imgSrc: "./images/tech.jpeg",
+            imgCaption: "Technical Supervisor "
+          },
+          ancillary: {
+            badge: "ANCILLARY WORKSTATIONS • SUPPORT",
+            title: "Ancillary Workstations",
+            summary: "Database administration, booking/billing support, and automated OS deployment/recovery.",
+            items: [
+              { code: "DBM", name: "Database Management", desc: "Database administration & site adaptation workstation." },
+              
+              { code: "KICKSTART SERVER", name: "OS Deployment & Recovery", desc: "Automated OS image installation, backup & recovery server." }
+            ],
+            imgSrc: "./images/dbm.jpeg",
+            imgCaption: "Ancillary Workstations "
+          }
+        };
+
+        const panel = document.getElementById("s7-detail-panel");
+        const btns = Array.from(document.querySelectorAll(".s7-cat"));
+
+        const renderCat = (catKey) => {
+          btns.forEach(b => {
+            const act = b.dataset.cat === catKey;
+            b.className = `s7-cat px-3 py-1.5 rounded-xl font-mono text-xs cursor-pointer ${act ? 'font-semibold bg-sky-600 text-white' : 'theme-card border'}`;
+          });
+
+          const d = categories[catKey] || categories.area;
+          if (panel) {
+            panel.innerHTML = `
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center slide-enter">
+                <div class="lg:col-span-7 space-y-3">
+                  <div class="border-b border-sky-500/20 pb-2.5">
+                    <span class="font-mono text-xs theme-amber font-bold">${d.badge}</span>
+                    <h3 class="text-xl sm:text-2xl font-bold theme-accent mt-0.5">${d.title}</h3>
+                    <p class="text-xs sm:text-sm theme-secondary mt-1">${d.summary}</p>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    ${d.items.map(it => `
+                      <div class="theme-inset border rounded-xl p-3 space-y-1">
+                        <div class="font-mono text-xs font-bold theme-emerald">${it.code}</div>
+                        <div class="text-xs sm:text-sm font-bold theme-primary">${it.name}</div>
+                        <p class="text-xs theme-secondary leading-relaxed">${it.desc}</p>
+                      </div>
+                    `).join("")}
+                  </div>
+                </div>
+
+                <!-- Cover Image Placeholder -->
+                <div class="lg:col-span-5 flex flex-col gap-1.5">
+                  <div class="img-placeholder-frame rounded-2xl aspect-video w-full shadow-lg">
+                    <div class="scan-line"></div>
+                    <img src="${d.imgSrc}" alt="${d.imgCaption}" class="cover-img" />
+                    <span class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-md bg-black/75 border border-sky-400/40 font-mono text-[10px] theme-accent flex items-center gap-1.5">
+                      
+                    </span>
+                  </div>
+                  <div class="font-mono text-[11px] theme-muted text-center">${d.imgCaption}</div>
+                </div>
+              </div>
+            `;
+          }
+        };
+
+        btns.forEach(b => b.addEventListener("click", () => renderCat(b.dataset.cat)));
+        renderCat("area");
+      }
+      // SLIDE 8 (Old Slide 12): Surveillance Sites Explorer
+      if (slideId === 8) {
+        const SITES = [
+          ["VANP Radar", "Primary + secondary radar, on airport", ["Radar head", "RCMS", "Switch", "RDCU-Rx 1 & 2"], "local"],
+          ["VANP ADS-B", "Receivers at tower and ASCC", ["ADS-B receivers", "Switch 1 / 2", "RDCU-Rx 1 & 2"], "eth6"],
+          ["VABP", "Secondary radar (MSSR)", ["Radar site", "OFC", "FTI rack V.35", "Router", "Switch", "RDCU-Rx"], "eth4"],
+          ["VOHS", "MSSR + PSR", ["Radar site", "OFC", "FTI rack V.35", "Router", "Switch", "RDCU-Rx"], "eth4"],
+          ["VAID", "ADS-B", ["ADS-B station", "Fibre", "CPE", "Router", "Switch", "RDCU-Rx"], "eth4"],
+          ["VAJB", "ADS-B", ["ADS-B station", "Fibre", "CPE", "Router", "Switch", "RDCU-Rx"], "eth6"],
+          ["VAAU", "MSSR", ["Radar site", "Fibre", "CPE", "Router", "Switch", "RDCU-Rx"], "eth6"],
+          ["VOUZ", "MSSR", ["Radar site", "Fibre", "CPE", "Router", "Switch", "RDCU-Rx"], "eth6"]
+        ];
+        const bar = document.getElementById("s8-tab-bar");
+        const panel = document.getElementById("s8-panel");
+
+        const showSite = (idx) => {
+          if (bar) {
+            bar.innerHTML = SITES.map((s, i) => `
+              <button type="button" data-site="${i}" class="px-3.5 py-1.5 rounded-xl font-mono text-xs cursor-pointer ${i === idx ? 'font-semibold bg-sky-600 text-white' : 'theme-card border'}">${s[0]}</button>
+            `).join("");
+            bar.querySelectorAll("[data-site]").forEach(b => b.addEventListener("click", () => showSite(Number(b.dataset.site))));
+          }
+          const d = SITES[idx];
+          const last = d[2].length - 1;
+          const chain = d[2].map((c, k) => {
+            const tone = k === 0 ? "theme-amber" : (k === last ? "theme-emerald" : "theme-accent");
+            const chip = `<span class="stagger-item px-3 py-1.5 rounded-xl theme-inset border font-mono text-xs sm:text-sm font-semibold ${tone}" style="animation-delay:${k * 90}ms;">${c}</span>`;
+            const arrow = k < last ? `<span class="stagger-item theme-emerald text-sm inline-flex items-center" style="animation-delay:${k * 90 + 45}ms;">${ICONS.arrowRight}</span>` : "";
+            return chip + arrow;
+          }).join("");
+          const port = d[3] === "local" ? "LOCAL LAN" : d[3].toUpperCase();
+          if (panel) {
+            panel.innerHTML = `
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-500/20 pb-3">
+                <div>
+                  <h3 class="text-xl sm:text-2xl font-bold theme-accent">${d[0]}</h3>
+                  <p class="text-xs sm:text-sm theme-muted mt-0.5">${d[1]}</p>
+                </div>
+                <span class="font-mono text-xs px-2.5 py-1 rounded-full theme-inset border theme-emerald">ENTERS RDCU ON: ${port}</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">${chain}</div>
+              <svg viewBox="0 0 600 8" preserveAspectRatio="none" class="w-full h-2">
+                <line class="flow-dash" x1="0" y1="4" x2="600" y2="4" stroke="var(--accent-emerald)" stroke-width="2.4"/>
+              </svg>
+              <div class="theme-inset border-l-4 border-l-sky-400 border rounded-xl p-3 text-xs sm:text-sm theme-secondary">
+                <strong class="theme-accent">Signal path:</strong> ${d[2].join(" → ")}.
+              </div>
+            `;
+          }
+        };
+        showSite(0);
+      }
+    }
+
+    // Index Drawer Toggle
+    function toggleIndexDrawer(forceState) {
+      const drawer = document.getElementById("index-drawer");
+      if (!drawer) return;
+      if (typeof forceState === "boolean") {
+        drawer.classList.toggle("hidden", !forceState);
+      } else {
+        drawer.classList.toggle("hidden");
+      }
+    }
+
+    document.getElementById("toggle-index-btn")?.addEventListener("click", () => toggleIndexDrawer());
+    document.getElementById("close-index-btn")?.addEventListener("click", () => toggleIndexDrawer(false));
+    document.getElementById("index-drawer")?.addEventListener("click", (e) => {
+      if (e.target.id === "index-drawer") toggleIndexDrawer(false);
+    });
+
+    // Clickable Progress Bar
+    document.getElementById("progress-track")?.addEventListener("click", (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const targetSlide = Math.ceil(ratio * SLIDES.length) || 1;
+      goToSlide(targetSlide);
+    });
+
+    // Keyboard Shortcuts
+    document.addEventListener("keydown", (e) => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+      const k = e.key.toLowerCase();
+      if (e.key === "ArrowRight" || e.key === " ") {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        goToSlide(1);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        goToSlide(SLIDES.length);
+      } else if (k === "o" || k === "i") {
+        e.preventDefault();
+        toggleIndexDrawer();
+      } else if (e.key === "Escape") {
+        toggleIndexDrawer(false);
+      }
+    });
+
+    // Touch Swipe Support
+    let touchStartX = 0;
+    const stageEl = document.getElementById("deck-stage");
+    stageEl?.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    stageEl?.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(dx) > 60) {
+        if (dx < 0) nextSlide();
+        else prevSlide();
+      }
+    }, { passive: true });
+
+    document.getElementById("prev-btn")?.addEventListener("click", prevSlide);
+    document.getElementById("next-btn")?.addEventListener("click", nextSlide);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const hashMatch = location.hash.match(/^#s(\d+)$/);
+      if (hashMatch) {
+        goToSlide(Number(hashMatch[1]));
+      } else {
+        renderSlide();
+      }
+    });
+  </script>
+</body>
+</html>
